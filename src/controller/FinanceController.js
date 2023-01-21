@@ -28,6 +28,17 @@ class FinanceController {
 
         return response.status(200).json({finance})
     }
+
+    async delete(request, response) {
+        const {id} = request.params;
+
+        await knex("finance").where({id}).delete();
+
+        return response.status(200).json({
+            status: "200",
+            message:"Sucesso ao deletar !"
+        });
+    };
 };
 
 module.exports = FinanceController;
