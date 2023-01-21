@@ -20,6 +20,14 @@ class FinanceController {
         })
 
     };
+
+    async show(request, response) {
+        const {id} = request.params;
+
+        const finance = await knex("finance").where({id}).first();
+
+        return response.status(200).json({finance})
+    }
 };
 
 module.exports = FinanceController;
