@@ -39,6 +39,17 @@ class FinanceController {
             message:"Sucesso ao deletar !"
         });
     };
+
+    async index(request, response) {
+        const {user_id, title} = request.query
+
+        const financial = await knex("finance")
+        .where({user_id})
+        .whereLike("title", `%${title}%`)
+        .orderBy("title");
+
+        return response.json({financial});
+    }
 };
 
 module.exports = FinanceController;
