@@ -3,7 +3,7 @@ const knex = require("../database/knex");
 class FinanceController {
     async create(request, response) {
         const {title, description, type, value} = request.body;
-        const {user_id} = request.params;
+        const user_id = request.user.id;
 
         await knex("finance").insert({
             title,
@@ -41,8 +41,9 @@ class FinanceController {
     };
 
     async index(request, response) {
-        const {user_id, title} = request.query
-
+        const {title} = request.query
+        const user_id = request.user.id;
+        
         const financial = await knex("finance")
         .where({user_id})
         .whereLike("title", `%${title}%`)

@@ -27,9 +27,9 @@ class UserController {
     };
     async update(request, response) {
         const {name, email, new_password, old_password} = request.body;
-        const {id} = request.params;
+        const user_id = request.user.id;
 
-        const user = await knex("users").where({id}).first();
+        const user = await knex("users").where({id: user_id}).first();
         if(!user) {
             throw new AppError("Usuário não encontrado")
         };
@@ -60,7 +60,7 @@ class UserController {
             user.password = await hash(new_password, 8)
         }
 
-        await knex("users").where({id}).update({
+        await knex("users").where({id: user_id}).update({
             name: user.name,
             email: user.email,
             password: user.password,
