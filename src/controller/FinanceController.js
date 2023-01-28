@@ -26,7 +26,7 @@ class FinanceController {
 
         const finance = await knex("finance").where({id}).first();
 
-        return response.status(200).json({finance})
+        return response.status(200).json(finance)
     }
 
     async delete(request, response) {
@@ -43,13 +43,12 @@ class FinanceController {
     async index(request, response) {
         const {title} = request.query
         const user_id = request.user.id;
-        
         const financial = await knex("finance")
         .where({user_id})
         .whereLike("title", `%${title}%`)
         .orderBy("title");
 
-        return response.json({financial});
+        return response.json(financial);
     }
 };
 
